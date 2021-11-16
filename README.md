@@ -31,6 +31,9 @@ Usage of ./cmd/rotateproxy/rotateproxy:
 
 time 代表。毫秒值。默认为超过8000毫秒则不使用当前代理
 
+![proxy](https://user-images.githubusercontent.com/27684409/142030959-588afe68-3a1a-4734-86e4-7ec347e18e21.png)
+
+
 
 
 
