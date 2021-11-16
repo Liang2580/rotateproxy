@@ -5,12 +5,12 @@
 ## 帮助
 
 ```shell
-└──╼ #./cmd/rotateproxy/rotateproxy  -h
+└──╼ #./cmd/rotateproxy/rotateproxy -h
 Usage of ./cmd/rotateproxy/rotateproxy:
   -email string
     	email address
   -l string
-    	listen address (default ":9")
+    	listen address (default ":9999")
   -page int
     	the page count you want to crawl (default 5)
   -region int
@@ -24,6 +24,12 @@ Usage of ./cmd/rotateproxy/rotateproxy:
 
 ```
 
+
+使用方法
+
+./cmd/rotateproxy/rotateproxy  -email=qqq.com  -token=xxx 
+
+time 代表。毫秒值。默认为超过8000毫秒则不使用当前代理
 
 
 
