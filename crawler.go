@@ -59,12 +59,12 @@ func RunCrawler(fofaApiKey, fofaEmail, rule string, pageNum int) (err error) {
 
 func StartRunCrawler(fofaApiKey, fofaEmail, rule string, pageCount int) {
 	go func() {
-		for i := 1; i <= 3; i++ {
+		for i := 1; i <= pageCount; i++ {
 			RunCrawler(fofaApiKey, fofaEmail, rule, i)
 		}
 		ticker := time.NewTicker(600 * time.Second)
 		for range ticker.C {
-			for i := 1; i <= 3; i++ {
+			for i := 1; i <= pageCount; i++ {
 				RunCrawler(fofaApiKey, fofaEmail, rule, i)
 			}
 		}
