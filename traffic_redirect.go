@@ -42,10 +42,10 @@ func (c *RedirectClient) Serve() error {
 	if err != nil {
 		return err
 	}
-	for IsProxyURLBlank() {
-		fmt.Println("[*] waiting for crawl proxy...")
-		time.Sleep(3 * time.Second)
-	}
+	//for IsProxyURLBlank() {
+	//	fmt.Println("[*] waiting for crawl proxy...")
+	//	time.Sleep(3 * time.Second)
+	//}
 	for {
 		conn, err := l.Accept()
 		if err != nil {
@@ -69,14 +69,26 @@ func (c *RedirectClient) HandleConn(conn net.Conn) {
 	}
 	key2 := strings.TrimPrefix(key, "socks5://")
 	fmt.Println(key)
-	cc, err := net.DialTimeout("tcp", key2, 20*time.Second)
+	cc, err := net.DialTimeout("tcp", key2, 500*time.Millisecond)
+	flag :=false
 	if err != nil {
 		//如果超时。则踢出这个节点
-		StopProxy(key)
-		fmt.Printf("[!] cannot connect to error1 %v\n", key2)
-		closeConn(conn)
-		return
+		fmt.Printf("连接失败\n")
+		flag=true
+		go StopProxy(key)
+		go closeConn(conn)
 	}
+	if flag{
+		key2 = strings.TrimPrefix(key, "socks5://")
+		fmt.Printf("[!] 连接代理失败了。重新选择节点中 %v\n", key2)
+		cc, err = net.DialTimeout("tcp", key2, 500*time.Millisecond)
+		if err != nil {
+			StopProxy(key)
+			closeConn(conn)
+			return
+		}
+	}
+
 	endTime := time.Now().UnixNano()
 	Milliseconds:= int((endTime - startTime) / 1e6)// 毫秒
 	if Milliseconds>30000{
